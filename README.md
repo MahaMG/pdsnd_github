@@ -6,13 +6,24 @@ Bikeshare data analysis with python
 
 ### Description
 In this project, I worked on data analysis using Python.
-I analyzed bike share data for America in Chicago, New York and Washington.
-Firstly, filter the data by city, and secondly, filter the data by month or day or both or not at all.
+I analyzed bike share data in three major cities in America "Chicago, New York, and Washington".
+
+Firstly, filter the data by city "which city the user wants". 
+Then, filter the data by month, day, or both, or not at all.
+
 The code works as calculating for:
-- Calculating The Most Frequent Times of Travel
-- Calculating The Most Popular Stations and Trip
-- Calculating Trip Duration
-- Calculating User Stats
+    - Calculating The Most Frequent Times of Trip
+        Popular hour
+    - Calculating The Most Popular Stations
+        Most Frequent Start Station
+        Most Frequent End Station
+        Most popular trip of start station and end station trip
+    - Calculating Trip Duration
+        Total trip time
+        Avg trip time
+    - Calculating User Stats
+        counts of user types "Subscriber, Customer, or Dependent"
+        counts of gender
 
 ### Files used
 chicago.csv
