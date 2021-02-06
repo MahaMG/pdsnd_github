@@ -1,4 +1,3 @@
-import time
 import pandas as pd
 import numpy as np
 import functions as func
@@ -28,6 +27,7 @@ def get_filters():
 
     # get user input for city (chicago, new york city, washington). 
     city = func.city()
+
 
     # Get user input for the type of filter she/he want to use.
     # She/He must enter one of these four types or she/he will not be able to complete the program.
@@ -73,14 +73,14 @@ def load_data(city, month, day):
     # Split the date column into three new columns for use in filtering by day, month, and year.
     if filter_type == 'month':
         df['Start Time'] = pd.to_datetime(df['Start Time'])
-        df['year'] = df['Start Time'].dt.year
-        df['month'] = df['Start Time'].dt.month
+        df['year'] = df['Start Time'].dt.year # extract year from the Start Time column to create an year column
+        df['month'] = df['Start Time'].dt.month # extract month from the Start Time column to create an month column
         df = df[df['month'] == month]
     elif filter_type == 'day':
         df['Start Time'] = pd.to_datetime(df['Start Time'])
         df['year'] = df['Start Time'].dt.year
         df['month'] = df['Start Time'].dt.month
-        df['day'] = df['Start Time'].dt.day
+        df['day'] = df['Start Time'].dt.day # extract day from the Start Time column to create an day column
         df = df[df['day'] == day]
     
     return df
@@ -89,36 +89,34 @@ def load_data(city, month, day):
 def time_stats(df):
     # Displays statistics on the most frequent times of trip.
 
-    print('\nCalculating The Most Frequent Times of Trip...\n')
-    start_time = time.time()
+    print('\nCalculating The Most Frequent Times of trip...\n')
 
     # convert the Start Time column to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
 
-    # Split the date column into three new columns for use in filtering by day, month, and year.
-    df['year'] = df['Start Time'].dt.year
-    df['month'] = df['Start Time'].dt.month
-    df['day'] = df['Start Time'].dt.day
-    df['hour'] = df['Start Time'].dt.hour
+    # display the most common month
+    df['year'] = df['Start Time'].dt.year # extract year from the Start Time column to create an year column
+    df['month'] = df['Start Time'].dt.month # extract month from the Start Time column to create an month column
+    df['day'] = df['Start Time'].dt.day # extract month from the Start Time column to create an month column
+    df['hour'] = df['Start Time'].dt.hour # extract hour from the Start Time column to create an hour column
 
     if filter_type == 'both' or filter_type == 'month':
-        # display the most common day of week
+        # Find the most booked and ordered day of the month
         popular_day = df[df.month == month].day.mode()[0]
-        # extract hour from the Start Time column to create an hour column
+        # Find the hour the most crowded and frequent in it
         popular_hour = df[df.month == month].hour.mode()[0]
         print('Popular day:',popular_day,', Popular hour:', popular_hour)
     
     elif filter_type == 'day':
-        # display the most common day of week
+        # Find the most booked and ordered hour of the day
         popular_hour = df[df.day == day].hour.mode()[0]
-        # popular_hour = df[df.month == month].hour.mode()[0]
         print('Popular hour:', popular_hour)
     
     elif filter_type == 'none':
+        # Find the most booked and ordered hour at all
         popular_hour = df[df.year == 2017].hour.mode()[0]
         print('Popular hour:', popular_hour)
     
-    print("This took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
 
@@ -126,7 +124,6 @@ def station_stats(df):
     # Displays statistics on the most popular stations and trip.
 
     print('\nCalculating The Most Popular Stations and Trip...\n')
-    start_time = time.time()
 
     # display most commonly used start station
     df['Start Station'] = pd.Series(df['Start Station'])
@@ -143,7 +140,6 @@ def station_stats(df):
     print('Most Frequent End Station:', popular_end_station)
     print('Most popular trip of start station and end station trip:\n',popular_trip)
     
-    print("This took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
 
@@ -151,18 +147,16 @@ def trip_duration_stats(df):
     # Displays statistics on the total and average trip duration.
 
     print('\nCalculating Trip Duration...\n')
-    start_time = time.time()
 
     # display total trip time
-    total_travle_time = df['Trip Duration'].sum()
+    total_trip_time = df['Trip Duration'].sum()
 
-    # display mean trip time
-    mean_travle_time = df['Trip Duration'].mean()
+    # display avg trip time
+    mean_trip_time = df['Trip Duration'].mean()
 
-    print('Total trip time:', total_travle_time)
-    print('Avg trip time:', mean_travle_time)
+    print('Total trip time:', total_trip_time)
+    print('Avg trip time:', mean_trip_time)
 
-    print("This took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
 
@@ -170,7 +164,6 @@ def user_stats(df):
     # Displays statistics on bikeshare users.
 
     print('\nCalculating User Stats...\n')
-    start_time = time.time()
 
     # Display counts of user types
     user_types = df['User Type'].value_counts()
@@ -181,23 +174,22 @@ def user_stats(df):
         user_gender = df['Gender'].value_counts()
         print('counts of gender\n', user_gender)
 
-        # Display earliest, most recent, and most common year of birth
-        earliest_yearbirth = df['Birth Year'].min()
-        recent_yearbirth = df['Birth Year'].max()
+        # Display most common year of birth
         common_yearbirth = df['Birth Year'].mode()
-        print('Earliest year of birth:',earliest_yearbirth,'\nMost recent year of birth',recent_yearbirth,'\nMost common year of birth', common_yearbirth)
+        print('Most common year of birth', common_yearbirth)
 
-    print("This took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
 
 def individual_trip(df):
     # Display five more rows of individual trips from dataframe each time the user says "yes"
-    n=0
-    m=5
+
+    # To order print 5 specific rows each time and also not repeated
+    n=0 # n = the beginning of the index number
+    m=5 # m = the end of the index number
     while True:
         individual_trip = df.iloc[n:m,:]
-        print(tabulate(individual_trip))
+        print(tabulate(individual_trip)) # tabulate > To display the table completely
         n+=5
         m+=5
         indivi_data = input("\nWould you like to view individual trip data? 'yes' or 'no'.\n")
