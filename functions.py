@@ -3,7 +3,7 @@ CITY_DATA = { 'chicago': 'chicago.csv',
               'washington': 'washington.csv' }
               
 def city():
-    # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
+    # get user input for city (chicago, new york city, washington). 
     while True:
         try:
             city_name = str(input('Would you like to see data for Chicago, New york, or Washington?\n')).lower()
@@ -32,7 +32,7 @@ def month():
     return month
 
 def day():
-     # get user input for day of week (all, monday, tuesday, ... sunday)
+     # get user input for day of week 
     while True:
         try:
             days = []
