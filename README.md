@@ -12,23 +12,24 @@ Firstly, filter the data by city "which city the user wants".
 Then, filter the data by month, day, or both, or not at all.
 
 The code works as calculating for:
-    - Calculating The Most Frequent Times of Trip
-        Popular hour
-    - Calculating The Most Popular Stations
-        Most Frequent Start Station
-        Most Frequent End Station
-        Most popular trip of start station and end station trip
-    - Calculating Trip Duration
-        Total trip time
-        Avg trip time
-    - Calculating User Stats
-        counts of user types "Subscriber, Customer, or Dependent"
-        counts of gender
+- Calculating The Most Frequent Times of Trip
+    Popular hour
+- Calculating The Most Popular Stations
+    Most Frequent Start Station
+    Most Frequent End Station
+    Most popular trip of start station and end station trip
+- Calculating Trip Duration
+    Total trip time
+    Avg trip time
+- Calculating User Stats
+    counts of user types "Subscriber, Customer, or Dependent"
+    counts of gender
 
 ### Files used
-chicago.csv
-new_york_city.csv
-washington.csv
+The Bikeshare data that I used for the project is split into three files depending on the city:
+- chicago.csv
+- new_york_city.csv
+- washington.csv
 
 ### Credits
 Some of the resources that I benefited greatly from when writing the project:
