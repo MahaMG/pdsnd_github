@@ -2,9 +2,7 @@ import time
 import pandas as pd
 import numpy as np
 import functions as func
-from tabulate import tabulate
-
-# pd.set_option('display.max_columns',200)
+from tabulate import tabulate # To display the table completely and not block some of the columns
 
 
 CITY_DATA = { 'chicago': 'chicago.csv',
@@ -15,7 +13,6 @@ CITY_DATA = { 'chicago': 'chicago.csv',
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
-
     Returns:
         (str) city - name of the city to analyze
         (str) month - name of the month to filter by, or "all" to apply no month filter
@@ -23,15 +20,17 @@ def get_filters():
     """
     print('Hello! Let\'s explore some US bikeshare data!')
 
+    # global variables I need in this program.
     global city
     global month
     global day
     global filter_type
-    # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
+
+    # get user input for city (chicago, new york city, washington). 
     city = func.city()
 
-    # get user input for month (all, january, february, ... , june)
-    # get user input for day of week (all, monday, tuesday, ... sunday)
+    # Get user input for the type of filter she/he want to use.
+    # She/He must enter one of these four types or she/he will not be able to complete the program.
     filter_list = ['month', 'day', 'both', 'none']
     while True:
         try:
@@ -67,12 +66,11 @@ def get_filters():
 
 
 def load_data(city, month, day):
-    
     # Loads data for the specified city and filters by month and day if applicable.
     # Returns: df - Pandas DataFrame containing city data filtered by month and day
    
     df = pd.read_csv(CITY_DATA[city])
-
+    # Split the date column into three new columns for use in filtering by day, month, and year.
     if filter_type == 'month':
         df['Start Time'] = pd.to_datetime(df['Start Time'])
         df['year'] = df['Start Time'].dt.year
@@ -85,26 +83,24 @@ def load_data(city, month, day):
         df['day'] = df['Start Time'].dt.day
         df = df[df['day'] == day]
     
-    
     return df
 
 
 def time_stats(df):
-    # Displays statistics on the most frequent times of travel.
+    # Displays statistics on the most frequent times of trip.
 
-    print('\nCalculating The Most Frequent Times of Travel...\n')
+    print('\nCalculating The Most Frequent Times of Trip...\n')
     start_time = time.time()
 
     # convert the Start Time column to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
 
-    # display the most common month
+    # Split the date column into three new columns for use in filtering by day, month, and year.
     df['year'] = df['Start Time'].dt.year
     df['month'] = df['Start Time'].dt.month
     df['day'] = df['Start Time'].dt.day
     df['hour'] = df['Start Time'].dt.hour
 
-    
     if filter_type == 'both' or filter_type == 'month':
         # display the most common day of week
         popular_day = df[df.month == month].day.mode()[0]
@@ -125,13 +121,12 @@ def time_stats(df):
     print("This took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
+
 def station_stats(df):
     # Displays statistics on the most popular stations and trip.
 
     print('\nCalculating The Most Popular Stations and Trip...\n')
     start_time = time.time()
-
-    # columns may we need "Trip Duration, Start Station, End Station"
 
     # display most commonly used start station
     df['Start Station'] = pd.Series(df['Start Station'])
@@ -148,7 +143,6 @@ def station_stats(df):
     print('Most Frequent End Station:', popular_end_station)
     print('Most popular trip of start station and end station trip:\n',popular_trip)
     
-
     print("This took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
@@ -159,14 +153,14 @@ def trip_duration_stats(df):
     print('\nCalculating Trip Duration...\n')
     start_time = time.time()
 
-    # display total travel time
+    # display total trip time
     total_travle_time = df['Trip Duration'].sum()
 
-    # display mean travel time
+    # display mean trip time
     mean_travle_time = df['Trip Duration'].mean()
 
-    print('Total travel time:', total_travle_time)
-    print('Avg travel time:', mean_travle_time)
+    print('Total trip time:', total_travle_time)
+    print('Avg trip time:', mean_travle_time)
 
     print("This took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -198,7 +192,7 @@ def user_stats(df):
 
 
 def individual_trip(df):
-    # Display some rows of individual trips from dataframe
+    # Display five more rows of individual trips from dataframe each time the user says "yes"
     n=0
     m=5
     while True:
@@ -209,7 +203,6 @@ def individual_trip(df):
         indivi_data = input("\nWould you like to view individual trip data? 'yes' or 'no'.\n")
         if indivi_data.lower() != 'yes':
             break
-
 
 
 def main():
